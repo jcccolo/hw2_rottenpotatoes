@@ -9,7 +9,10 @@ class MoviesController < ApplicationController
   def index
     @all_ratings = Movie.ratings 
     @sort_by = params[:sort_by]
-    @movies = Movie.all({:order => @sort_by})
+    @checked_ratings = params[:ratings] ? params[:ratings] : {}
+    selected_ratings = @checked_ratings.keys
+    # @movies = Movie.all({:order => @sort_by})
+    @movies = Movie.find_all_by_rating(selected_ratings, {:order => @sort_by})
   end
 
   def new
